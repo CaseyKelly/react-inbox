@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Message = ({ subject, read, selected }) => {
+const Message = ({ subject, read, selected, labels }) => {
   const messageStyle = `row message ${read ? 'read' : 'unread'} ${
     selected ? 'selected' : ''
   }`;
@@ -17,6 +17,11 @@ const Message = ({ subject, read, selected }) => {
         </div>
       </div>
       <div className="col-xs-11">
+        {labels.map(label => (
+          <span key={label} className="label label-warning">
+            {label}
+          </span>
+        ))}
         <a href="#">{subject}</a>
       </div>
     </div>

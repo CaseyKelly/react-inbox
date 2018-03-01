@@ -12,8 +12,14 @@ class MessageList extends Component {
   render() {
     return (
       <div>
-        {this.state.messages.map(({ id, subject, read, selected}) => (
-          <Message key={id} subject={subject} read={read} selected={selected} />
+        {this.state.messages.map(({ id, subject, read, selected, labels }) => (
+          <Message
+            key={id}
+            subject={subject}
+            read={read}
+            selected={selected}
+            labels={labels}
+          />
         ))}
       </div>
     );
