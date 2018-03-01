@@ -20,15 +20,18 @@ class Message extends Component {
   };
 
   toggleSelected = () => {
-    const toggleStyle = this.state.selectedStyle === ' selected'
-      ? ''
-      : ' selected';
-    this.setState({ selectedStyle: toggleStyle })
-  }
+    const toggleStyle =
+      this.state.selectedStyle === ' selected' ? '' : ' selected';
+    this.setState({ selectedStyle: toggleStyle });
+  };
 
   render() {
     return (
-      <div className={'row message' + this.state.readStyle + this.state.selectedStyle}>
+      <div
+        className={
+          'row message' + this.state.readStyle + this.state.selectedStyle
+        }
+      >
         <div className="col-xs-1">
           <div className="row">
             <div className="col-xs-2">
