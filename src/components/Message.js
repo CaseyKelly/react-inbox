@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Message = ({ subject }) => {
+const Message = ({ subject, read }) => {
+  const status = read ? 'row message read' : 'row message unread';
   return (
-    <div className="row message unread">
+    <div className={status}>
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
