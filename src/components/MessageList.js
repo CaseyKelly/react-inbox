@@ -6,7 +6,6 @@ class MessageList extends Component {
     super(props);
 
     this.state = { messages: this.props.seedMessages };
-    console.log(this.state);
   }
 
   render() {
