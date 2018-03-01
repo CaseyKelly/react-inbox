@@ -52,7 +52,7 @@ class Message extends Component {
               {label}
             </span>
           ))}
-          <a href="#">{this.props.subject}</a>
+          <a href="/">{this.props.subject}</a>
         </div>
       </div>
     );
