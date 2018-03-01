@@ -4,10 +4,9 @@ class Message extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messageStyle: `row message ${this.props.read ? 'read' : 'unread'} ${
-        this.props.selected ? 'selected' : ''
-      }`,
-      checkboxStyle: this.props.selected ? 'checked' : '',
+      readStyle: this.props.read ? ' read' : ' unread',
+      selectedStyle: this.props.selected ? ' selected' : '',
+      checkboxStyle: this.props.selected ? ' checked' : '',
       starStyle: this.props.starred ? 'star fa fa-star' : 'star fa fa-star-o'
     };
   }
@@ -20,15 +19,23 @@ class Message extends Component {
     this.setState({ starStyle: toggleStyle });
   };
 
+  toggleSelected = () => {
+    const toggleStyle = this.state.selectedStyle === ' selected'
+      ? ''
+      : ' selected';
+    this.setState({ selectedStyle: toggleStyle })
+  }
+
   render() {
     return (
-      <div className={this.state.messageStyle}>
+      <div className={'row message' + this.state.readStyle + this.state.selectedStyle}>
         <div className="col-xs-1">
           <div className="row">
             <div className="col-xs-2">
               <input
                 type="checkbox"
                 defaultChecked={this.state.checkboxStyle}
+                onClick={this.toggleSelected}
               />
             </div>
             <div className="col-xs-2">
