@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Message = ({ subject, read }) => {
-  const status = read ? 'row message read' : 'row message unread';
+const Message = ({ subject, read, selected }) => {
+  const messageStyle = `row message ${read ? 'read' : 'unread' } ${selected ? 'selected' : '' }` 
   return (
-    <div className={status}>
+    <div className={messageStyle}>
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox" />
+            <input type="checkbox" checked={selected ? 'checked' : '' } />
           </div>
           <div className="col-xs-2">
             <i className="star fa fa-star-o" />
