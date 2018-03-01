@@ -1,18 +1,21 @@
 import React from 'react';
 
-const Message = ({ subject, read, selected, labels }) => {
+const Message = ({ subject, read, selected, labels, starred }) => {
   const messageStyle = `row message ${read ? 'read' : 'unread'} ${
     selected ? 'selected' : ''
   }`;
+  const checkboxStyle = selected ? 'checked' : '';
+  const starStyle = starred ? 'star fa fa-star' : 'star fa fa-star-o';
+
   return (
     <div className={messageStyle}>
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox" defaultChecked={selected ? 'checked' : ''} />
+            <input type="checkbox" defaultChecked={checkboxStyle} />
           </div>
           <div className="col-xs-2">
-            <i className="star fa fa-star-o" />
+            <i className={starStyle} />
           </div>
         </div>
       </div>
