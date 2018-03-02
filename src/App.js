@@ -17,8 +17,15 @@ class App extends Component {
 
   toggleSelectAll = () => {
     const messages = this.state.messages.slice();
+    const selectedMessages = this.state.messages.filter(
+      message => message.selected === true
+    );
+    let selected;
+    selectedMessages.length === this.state.messages.length
+      ? (selected = false)
+      : (selected = true);
     messages.map(message => {
-      message.selected = true;
+      message.selected = selected;
       return message;
     });
     this.setState({ messages });
@@ -31,19 +38,25 @@ class App extends Component {
 
     let btnStyle;
     if (selectedMessages.length === 0) {
-      btnStyle = 'fa fa-square-o'
-    } else if (selectedMessages.length > 0 && selectedMessages.length < this.state.messages.length) {
-      btnStyle = 'fa fa-minus-square-o'
+      btnStyle = 'fa fa-square-o';
+    } else if (
+      selectedMessages.length > 0 &&
+      selectedMessages.length < this.state.messages.length
+    ) {
+      btnStyle = 'fa fa-minus-square-o';
     } else if (selectedMessages.length === this.state.messages.length) {
-      btnStyle = 'fa fa-check-square-o'
+      btnStyle = 'fa fa-check-square-o';
     }
-    return btnStyle
+    return btnStyle;
   };
 
   render() {
     return (
       <div className="App container">
-        <Toolbar toggleSelectAll={this.toggleSelectAll} selectAllBtnStyle={this.selectAllBtnStyle()} />
+        <Toolbar
+          toggleSelectAll={this.toggleSelectAll}
+          selectAllBtnStyle={this.selectAllBtnStyle()}
+        />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
     );
