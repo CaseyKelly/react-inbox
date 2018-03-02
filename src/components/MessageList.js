@@ -1,31 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Message from './Message';
 
-class MessageList extends Component {
-  constructor(props) {
-    super(props);
+const MessageList = ({ messages, toggle }) => {
+  const guid = () => {
+    return Math.random()
+      .toString(36)
+      .substring(2, 15);
+  };
 
-    this.state = { messages: this.props.seedMessages };
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.messages.map(
-          ({ id, subject, read, selected, labels, starred }) => (
-            <Message
-              key={id}
-              subject={subject}
-              read={read}
-              selected={selected}
-              labels={labels}
-              starred={starred}
-            />
-          )
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {messages.map(({ id, subject, read, selected, labels, starred }) => (
+        <Message
+          key={id + guid()}
+          id={id}
+          subject={subject}
+          read={read}
+          selected={selected}
+          labels={labels}
+          starred={starred}
+          toggle={toggle}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default MessageList;
