@@ -15,14 +15,20 @@ class App extends Component {
     this.setState({ messages });
   };
 
+  toggleSelectAll = () => {
+    const messages = this.state.messages
+    messages.map(message => {
+      message.selected = 'true';
+      return message
+    });
+    this.setState({ messages });
+  };
+
   render() {
     return (
       <div className="App container">
-        <Toolbar />
-        <MessageList
-          messages={this.state.messages}
-          toggle={this.toggle}
-        />
+        <Toolbar toggleSelectAll={this.toggleSelectAll} />
+        <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
     );
   }

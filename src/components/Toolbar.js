@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Toolbar = () => {
+const Toolbar = ({ toggleSelectAll }) => {
   return (
     <div className="row toolbar">
       <div className="col-md-12">
@@ -9,7 +9,7 @@ const Toolbar = () => {
           unread messages
         </p>
 
-        <button className="btn btn-default" onClick={this.toggleSelectAll}>
+        <button className="btn btn-default" onClick={toggleSelectAll}>
           <i className="fa fa-square-o" />
         </button>
 
