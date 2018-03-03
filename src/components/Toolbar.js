@@ -5,7 +5,8 @@ const Toolbar = ({
   selectAllBtnStyle,
   disabled,
   markAs,
-  unreadMessageCount
+  unreadMessageCount,
+  trashMessage
 }) => {
   return (
     <div className="row toolbar">
@@ -51,7 +52,7 @@ const Toolbar = ({
           <option value="gschool">gschool</option>
         </select>
 
-        <button className="btn btn-default" disabled={disabled}>
+        <button className="btn btn-default" disabled={disabled} onClick={trashMessage}>
           <i className="fa fa-trash-o" />
         </button>
       </div>

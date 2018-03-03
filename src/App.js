@@ -8,10 +8,12 @@ class App extends Component {
     this.state = { messages: this.props.seedMessages };
   }
 
-  toggle = message => {
-    const index = message.id - 1;
+  toggle = toggledMessage => {
     const messages = this.state.messages.slice();
-    messages[index] = message;
+    const index = messages.findIndex(
+      message => message.id === toggledMessage.id
+    );
+    messages[index] = toggledMessage;
     this.setState({ messages });
   };
 
@@ -73,6 +75,13 @@ class App extends Component {
     return unreadMessages.length;
   };
 
+  trashMessage = () => {
+    const remainingMessages = this.state.messages.filter(
+      message => message.selected !== true
+    );
+    this.setState({ messages: remainingMessages });
+  };
+
   render() {
     return (
       <div className="App container">
@@ -82,6 +91,7 @@ class App extends Component {
           disabled={this.disabled()}
           markAs={this.markAs}
           unreadMessageCount={this.unreadMessageCount()}
+          trashMessage={this.trashMessage}
         />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
