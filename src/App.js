@@ -54,17 +54,24 @@ class App extends Component {
     const selectedMessages = this.state.messages.filter(
       message => message.selected === true
     );
-    return selectedMessages.length === 0 ? 'disabled' : ''
-  }
+    return selectedMessages.length === 0 ? 'disabled' : '';
+  };
 
   markAs = e => {
     const readOrUnread = e.target.id === 'read' ? true : false;
     const selectedMessages = this.state.messages.filter(
       message => message.selected === true
     );
-    selectedMessages.map(message => message.read = readOrUnread)
+    selectedMessages.map(message => (message.read = readOrUnread));
     this.setState({ ...this.state.messages, selectedMessages });
-  }
+  };
+
+  unreadMessageCount = () => {
+    const unreadMessages = this.state.messages.filter(
+      message => message.read === false
+    );
+    return unreadMessages.length;
+  };
 
   render() {
     return (
@@ -74,6 +81,7 @@ class App extends Component {
           selectAllBtnStyle={this.selectAllBtnStyle()}
           disabled={this.disabled()}
           markAs={this.markAs}
+          unreadMessageCount={this.unreadMessageCount()}
         />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
