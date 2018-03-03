@@ -54,7 +54,9 @@ class App extends Component {
       message => message.selected === true
     );
     selectedMessages.map(message => {
-      return message.labels.push(`${e.target.value}`);
+      message.labels.includes(`${e.target.value}`)
+        ? message.labels
+        : message.labels.push(`${e.target.value}`);
     });
     this.setState({ ...this.state.messages, selectedMessages });
   };
