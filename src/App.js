@@ -50,12 +50,20 @@ class App extends Component {
     return btnStyle;
   };
 
+  disabled = () => {
+    const selectedMessages = this.state.messages.filter(
+      message => message.selected === true
+    );
+    return selectedMessages.length === 0 ? 'disabled' : ''
+  }
+
   render() {
     return (
       <div className="App container">
         <Toolbar
           toggleSelectAll={this.toggleSelectAll}
           selectAllBtnStyle={this.selectAllBtnStyle()}
+          disabled={this.disabled()}
         />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
