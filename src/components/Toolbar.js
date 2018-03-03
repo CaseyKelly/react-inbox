@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Toolbar = ({ toggleSelectAll, selectAllBtnStyle, disabled, markAsRead }) => {
+const Toolbar = ({ toggleSelectAll, selectAllBtnStyle, disabled, markAs}) => {
   return (
     <div className="row toolbar">
       <div className="col-md-12">
@@ -13,11 +13,11 @@ const Toolbar = ({ toggleSelectAll, selectAllBtnStyle, disabled, markAsRead }) =
           <i className={selectAllBtnStyle} />
         </button>
 
-        <button className="btn btn-default" disabled={disabled} onClick={markAsRead}>
+        <button id="read" className="btn btn-default" disabled={disabled} onClick={markAs}>
           Mark As Read
         </button>
 
-        <button className="btn btn-default" disabled={disabled}>
+        <button id="unread" className="btn btn-default" disabled={disabled} onClick={markAs}>
           Mark As Unread
         </button>
 
