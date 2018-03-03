@@ -57,6 +57,14 @@ class App extends Component {
     return selectedMessages.length === 0 ? 'disabled' : ''
   }
 
+  markAsRead = () => {
+    const selectedMessages = this.state.messages.filter(
+      message => message.selected === true
+    );
+    selectedMessages.map(message => message.read = true)
+    this.setState({ ...this.state.messages, selectedMessages });
+  }
+
   render() {
     return (
       <div className="App container">
@@ -64,6 +72,7 @@ class App extends Component {
           toggleSelectAll={this.toggleSelectAll}
           selectAllBtnStyle={this.selectAllBtnStyle()}
           disabled={this.disabled()}
+          markAsRead={this.markAsRead}
         />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
