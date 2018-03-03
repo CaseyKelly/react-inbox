@@ -1,14 +1,6 @@
 import React from 'react';
 
-const Message = ({
-  starred,
-  selected,
-  read,
-  labels,
-  subject,
-  toggle,
-  id
-}) => {
+const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
   const readStyle = read ? ' read' : ' unread';
   const selectedStyle = selected ? ' selected' : '';
   const checkboxStyle = selected ? ' checked' : '';
@@ -33,7 +25,7 @@ const Message = ({
       read: read,
       starred: starred,
       labels: labels,
-      selected: !selected,
+      selected: !selected
     };
     toggle(message);
   };

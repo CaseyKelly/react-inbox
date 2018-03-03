@@ -33,32 +33,6 @@ class App extends Component {
     this.setState({ messages });
   };
 
-  selectAllBtnStyle = () => {
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
-
-    let btnStyle;
-    if (selectedMessages.length === 0) {
-      btnStyle = 'fa fa-square-o';
-    } else if (
-      selectedMessages.length > 0 &&
-      selectedMessages.length < this.state.messages.length
-    ) {
-      btnStyle = 'fa fa-minus-square-o';
-    } else if (selectedMessages.length === this.state.messages.length) {
-      btnStyle = 'fa fa-check-square-o';
-    }
-    return btnStyle;
-  };
-
-  disabled = () => {
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
-    return selectedMessages.length === 0 ? 'disabled' : '';
-  };
-
   markAs = e => {
     const readOrUnread = e.target.id === 'read' ? true : false;
     const selectedMessages = this.state.messages.filter(
@@ -68,13 +42,6 @@ class App extends Component {
     this.setState({ ...this.state.messages, selectedMessages });
   };
 
-  unreadMessageCount = () => {
-    const unreadMessages = this.state.messages.filter(
-      message => message.read === false
-    );
-    return unreadMessages.length;
-  };
-
   trashMessage = () => {
     const remainingMessages = this.state.messages.filter(
       message => message.selected !== true
@@ -82,16 +49,25 @@ class App extends Component {
     this.setState({ messages: remainingMessages });
   };
 
+  applyLabel = e => {
+    const selectedMessages = this.state.messages.filter(
+      message => message.selected === true
+    );
+    selectedMessages.map(message => {
+      return message.labels.push(`${e.target.value}`);
+    });
+    this.setState({ ...this.state.messages, selectedMessages });
+  };
+
   render() {
     return (
       <div className="App container">
         <Toolbar
+          messages={this.state.messages}
           toggleSelectAll={this.toggleSelectAll}
-          selectAllBtnStyle={this.selectAllBtnStyle()}
-          disabled={this.disabled()}
           markAs={this.markAs}
-          unreadMessageCount={this.unreadMessageCount()}
           trashMessage={this.trashMessage}
+          applyLabel={this.applyLabel}
         />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
