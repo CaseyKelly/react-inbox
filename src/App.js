@@ -58,6 +58,7 @@ class App extends Component {
         ? message.labels
         : message.labels.push(`${e.target.value}`);
     });
+    e.target.value = 'Apply label'
     this.setState({ ...this.state.messages, selectedMessages });
   };
 
