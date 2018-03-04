@@ -58,7 +58,21 @@ class App extends Component {
         ? message.labels
         : message.labels.push(`${e.target.value}`);
     });
-    e.target.value = 'Apply label'
+    e.target.value = 'Apply label';
+    this.setState({ ...this.state.messages, selectedMessages });
+  };
+
+  removeLabel = e => {
+    const selectedMessages = this.state.messages.filter(
+      message => message.selected === true
+    );
+    selectedMessages.map(message => {
+      const index = message.labels.indexOf(`${e.target.value}`);
+      return message.labels.includes(`${e.target.value}`)
+        ? message.labels.splice(index, 1)
+        : message.labels;
+    });
+    e.target.value = 'Remove label';
     this.setState({ ...this.state.messages, selectedMessages });
   };
 
@@ -71,6 +85,7 @@ class App extends Component {
           markAs={this.markAs}
           trashMessage={this.trashMessage}
           applyLabel={this.applyLabel}
+          removeLabel={this.removeLabel}
         />
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>

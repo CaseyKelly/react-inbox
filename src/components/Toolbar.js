@@ -8,6 +8,7 @@ const Toolbar = ({
   unreadMessageCount,
   trashMessage,
   applyLabel,
+  removeLabel,
   messages
 }) => {
   const selectedMessages = messages.filter(
@@ -75,7 +76,11 @@ const Toolbar = ({
           <option value="gschool">gschool</option>
         </select>
 
-        <select className="form-control label-select" disabled={disabled()}>
+        <select
+          className="form-control label-select"
+          disabled={disabled()}
+          onChange={removeLabel}
+        >
           <option>Remove label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
