@@ -3,9 +3,13 @@ import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { messages: this.props.seedMessages };
+  state = { messages: [] };
+
+  async componentDidMount() {
+    const messagesResponse = await fetch('/api/messages');
+    const messagesJson = await messagesResponse.json();
+    const messages = messagesJson._embedded.messages;
+    this.setState({ messages });
   }
 
   toggle = toggledMessage => {
