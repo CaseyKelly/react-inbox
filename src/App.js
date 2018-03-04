@@ -3,6 +3,11 @@ import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+  }
+
   state = { messages: [] };
 
   async componentDidMount() {
@@ -12,14 +17,29 @@ class App extends Component {
     this.setState({ messages });
   }
 
-  toggle = toggledMessage => {
+  async toggle(request, toggledMessage) {
     const messages = this.state.messages.slice();
     const index = messages.findIndex(
       message => message.id === toggledMessage.id
     );
+    if (request !== false) {
+      this.updateStarState(request);
+    }
     messages[index] = toggledMessage;
     this.setState({ messages });
-  };
+  }
+
+  async updateStarState(request) {
+    const response = await fetch(`/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    return response;
+  }
 
   toggleSelectAll = () => {
     const messages = this.state.messages.slice();

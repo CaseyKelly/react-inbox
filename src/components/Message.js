@@ -7,6 +7,11 @@ const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
   const starStyle = starred ? 'star fa fa-star' : 'star fa fa-star-o';
 
   const handleStarred = e => {
+    const request = {
+      messageIds: [id],
+      command: "star",
+      star: !starred
+    };
     const message = {
       id: id,
       subject: subject,
@@ -15,7 +20,7 @@ const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
       labels: labels,
       selected: selected
     };
-    toggle(message);
+    toggle(request, message);
   };
 
   const handleChecked = e => {
@@ -27,7 +32,7 @@ const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
       labels: labels,
       selected: !selected
     };
-    toggle(message);
+    toggle(false, message);
   };
 
   return (
