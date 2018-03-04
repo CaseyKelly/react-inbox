@@ -23,13 +23,13 @@ class App extends Component {
       message => message.id === toggledMessage.id
     );
     if (request !== false) {
-      this.updateStarState(request);
+      this.updateMessage(request);
     }
     messages[index] = toggledMessage;
     this.setState({ messages });
   }
 
-  async updateStarState(request) {
+  async updateMessage(request) {
     const response = await fetch(`/api/messages`, {
       method: 'PATCH',
       body: JSON.stringify(request),
@@ -62,7 +62,13 @@ class App extends Component {
     const selectedMessages = this.state.messages.filter(
       message => message.selected === true
     );
+    const request = {
+      messageIds: selectedMessages.map(message => message.id),
+      command: "read",
+      read: readOrUnread
+    }
     selectedMessages.map(message => (message.read = readOrUnread));
+    this.updateMessage(request);
     this.setState({ ...this.state.messages, selectedMessages });
   };
 
