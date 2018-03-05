@@ -97,6 +97,12 @@ class App extends Component {
         ? message.labels
         : message.labels.push(`${e.target.value}`);
     });
+    const request = {
+      messageIds: selectedMessages.map(message => message.id),
+      command: 'addLabel',
+      label: `${e.target.value}`
+    };
+    this.updateMessage(request);
     e.target.value = 'Apply label';
     this.setState({ ...this.state.messages, selectedMessages });
   };
@@ -111,6 +117,12 @@ class App extends Component {
         ? message.labels.splice(index, 1)
         : message.labels;
     });
+    const request = {
+      messageIds: selectedMessages.map(message => message.id),
+      command: 'removeLabel',
+      label: `${e.target.value}`
+    };
+    this.updateMessage(request);
     e.target.value = 'Remove label';
     this.setState({ ...this.state.messages, selectedMessages });
   };
