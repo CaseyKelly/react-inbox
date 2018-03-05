@@ -42,11 +42,13 @@ class App extends Component {
     return response;
   }
 
+  getSelectedMessages = () => {
+    return this.state.messages.filter(message => message.selected === true);
+  };
+
   toggleSelectAll = () => {
     const messages = this.state.messages.slice();
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
+    const selectedMessages = this.getSelectedMessages();
     let selected;
     selectedMessages.length === this.state.messages.length
       ? (selected = false)
@@ -60,9 +62,7 @@ class App extends Component {
 
   markAs = e => {
     const readOrUnread = e.target.id === 'read' ? true : false;
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
+    const selectedMessages = this.getSelectedMessages();
     const request = {
       messageIds: selectedMessages.map(message => message.id),
       command: 'read',
@@ -74,9 +74,7 @@ class App extends Component {
   };
 
   trashMessage() {
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
+    const selectedMessages = this.getSelectedMessages();
     const remainingMessages = this.state.messages.filter(
       message => message.selected !== true
     );
@@ -89,42 +87,37 @@ class App extends Component {
   }
 
   applyLabel = e => {
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
+    const selectedMessages = this.getSelectedMessages();
     selectedMessages.map(message => {
       return message.labels.includes(`${e.target.value}`)
         ? message.labels
         : message.labels.push(`${e.target.value}`);
     });
-    const request = {
-      messageIds: selectedMessages.map(message => message.id),
-      command: 'addLabel',
-      label: `${e.target.value}`
-    };
-    this.updateMessage(request);
+    this.makeLabelRequest('addLabel', selectedMessages, e);
     e.target.value = 'Apply label';
     this.setState({ ...this.state.messages, selectedMessages });
   };
 
   removeLabel = e => {
-    const selectedMessages = this.state.messages.filter(
-      message => message.selected === true
-    );
+    const selectedMessages = this.getSelectedMessages();
     selectedMessages.map(message => {
       const index = message.labels.indexOf(`${e.target.value}`);
       return message.labels.includes(`${e.target.value}`)
         ? message.labels.splice(index, 1)
         : message.labels;
     });
+    this.makeLabelRequest('removeLabel', selectedMessages, e);
+    e.target.value = 'Remove label';
+    this.setState({ ...this.state.messages, selectedMessages });
+  };
+
+  makeLabelRequest = (addOrRemoveLabel, selectedMessages, e) => {
     const request = {
       messageIds: selectedMessages.map(message => message.id),
-      command: 'removeLabel',
+      command: addOrRemoveLabel,
       label: `${e.target.value}`
     };
     this.updateMessage(request);
-    e.target.value = 'Remove label';
-    this.setState({ ...this.state.messages, selectedMessages });
   };
 
   render() {
