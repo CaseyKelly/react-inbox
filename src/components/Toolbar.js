@@ -43,6 +43,10 @@ const Toolbar = ({
           {unreadMessages.length === 1 ? 'unread message' : 'unread messages'}
         </p>
 
+        <a className="btn btn-danger">
+          <i className="fa fa-plus" />
+        </a>
+
         <button className="btn btn-default" onClick={toggleSelectAll}>
           <i className={selectAllBtnStyle()} />
         </button>
