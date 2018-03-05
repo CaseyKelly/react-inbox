@@ -6,6 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.trashMessage = this.trashMessage.bind(this);
   }
 
   state = { messages: [] };
@@ -64,20 +65,28 @@ class App extends Component {
     );
     const request = {
       messageIds: selectedMessages.map(message => message.id),
-      command: "read",
+      command: 'read',
       read: readOrUnread
-    }
+    };
     selectedMessages.map(message => (message.read = readOrUnread));
     this.updateMessage(request);
     this.setState({ ...this.state.messages, selectedMessages });
   };
 
-  trashMessage = () => {
+  trashMessage() {
+    const selectedMessages = this.state.messages.filter(
+      message => message.selected === true
+    );
     const remainingMessages = this.state.messages.filter(
       message => message.selected !== true
     );
+    const request = {
+      messageIds: selectedMessages.map(message => message.id),
+      command: 'delete'
+    };
+    this.updateMessage(request);
     this.setState({ messages: remainingMessages });
-  };
+  }
 
   applyLabel = e => {
     const selectedMessages = this.state.messages.filter(
