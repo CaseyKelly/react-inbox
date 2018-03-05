@@ -9,6 +9,7 @@ const Toolbar = ({
   trashMessage,
   applyLabel,
   removeLabel,
+  toggleComposeForm,
   messages
 }) => {
   const selectedMessages = messages.filter(
@@ -43,7 +44,7 @@ const Toolbar = ({
           {unreadMessages.length === 1 ? 'unread message' : 'unread messages'}
         </p>
 
-        <a className="btn btn-danger">
+        <a className="btn btn-danger" onClick={toggleComposeForm}>
           <i className="fa fa-plus" />
         </a>
 

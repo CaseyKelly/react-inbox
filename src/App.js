@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
+import ComposeForm from './components/ComposeForm';
 
 class App extends Component {
   constructor(props) {
@@ -9,7 +10,10 @@ class App extends Component {
     this.trashMessage = this.trashMessage.bind(this);
   }
 
-  state = { messages: [] };
+  state = {
+    messages: [],
+    showComposeForm: false
+  };
 
   async componentDidMount() {
     const messagesResponse = await fetch('/api/messages');
@@ -120,6 +124,11 @@ class App extends Component {
     this.updateMessage(request);
   };
 
+  toggleComposeForm = () => {
+    const toggle = !this.state.showComposeForm
+    this.setState({ showComposeForm: toggle });
+  }
+
   render() {
     return (
       <div className="App container">
@@ -130,7 +139,9 @@ class App extends Component {
           trashMessage={this.trashMessage}
           applyLabel={this.applyLabel}
           removeLabel={this.removeLabel}
+          toggleComposeForm={this.toggleComposeForm}
         />
+        {this.state.showComposeForm ? <ComposeForm /> : <div />}
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
     );
