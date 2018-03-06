@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.trashMessage = this.trashMessage.bind(this);
+    this.createMessage = this.createMessage.bind(this);
   }
 
   state = {
@@ -32,6 +33,23 @@ class App extends Component {
     }
     messages[index] = toggledMessage;
     this.setState({ messages });
+  }
+
+  async createMessage(message) {
+    const messages = this.state.messages.slice();
+    const response = await fetch(`/api/messages`, {
+      method: 'POST',
+      body: JSON.stringify(message),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    this.setState({
+      messages: [...messages, message],
+      showComposeForm: false
+    });
+    return response;
   }
 
   async updateMessage(request) {
@@ -125,9 +143,9 @@ class App extends Component {
   };
 
   toggleComposeForm = () => {
-    const toggle = !this.state.showComposeForm
+    const toggle = !this.state.showComposeForm;
     this.setState({ showComposeForm: toggle });
-  }
+  };
 
   render() {
     return (
@@ -141,7 +159,11 @@ class App extends Component {
           removeLabel={this.removeLabel}
           toggleComposeForm={this.toggleComposeForm}
         />
-        {this.state.showComposeForm ? <ComposeForm /> : <div />}
+        {this.state.showComposeForm ? (
+          <ComposeForm createMessage={this.createMessage} />
+        ) : (
+          <div />
+        )}
         <MessageList messages={this.state.messages} toggle={this.toggle} />
       </div>
     );

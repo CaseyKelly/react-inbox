@@ -1,8 +1,17 @@
 import React from 'react';
 
-const ComposeForm = () => {
+const ComposeForm = ({ createMessage }) => {
+  const handleSubmit = e => {
+    e.preventDefault();
+    const message = {};
+    message.subject = e.target.subject.value;
+    message.body = e.target.body.value;
+    message.labels = [];
+    createMessage(message);
+  };
+
   return (
-    <form className="form-horizontal well">
+    <form className="form-horizontal well" onSubmit={handleSubmit}>
       <div className="form-group">
         <div className="col-sm-8 col-sm-offset-2">
           <h4>Compose Message</h4>
