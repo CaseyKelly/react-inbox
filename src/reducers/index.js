@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { MESSAGES_RECEIVED } from '../actions';
+import { MESSAGES_RECEIVED, COMPOSE_FORM_TOGGLED } from '../actions';
 
 function messages(state = { all: [] }, action) {
   switch (action.type) {
@@ -13,6 +13,16 @@ function messages(state = { all: [] }, action) {
   }
 }
 
+function compose(state = false, action) {
+  switch (action.type) {
+    case COMPOSE_FORM_TOGGLED:
+      return !state;
+    default:
+      return false;
+  }
+}
+
 export default combineReducers({
-  messages
+  messages,
+  showComposeForm: compose
 });

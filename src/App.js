@@ -3,8 +3,9 @@ import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
 import ComposeForm from './components/ComposeForm';
 import { connect } from 'react-redux';
+import { toggleComposeForm } from './actions'
 
-const App = ({ messages, showComposeForm }) =>
+const App = ({ messages, showComposeForm, toggleComposeForm }) =>
   messages.length ? (
     <div className="App container">
       <Toolbar
@@ -14,7 +15,7 @@ const App = ({ messages, showComposeForm }) =>
         trashMessage={this.trashMessage}
         applyLabel={this.applyLabel}
         removeLabel={this.removeLabel}
-        toggleComposeForm={this.toggleComposeForm}
+        toggleComposeForm={toggleComposeForm}
       />
       {showComposeForm ? (
         <ComposeForm createMessage={this.createMessage} />
@@ -27,12 +28,14 @@ const App = ({ messages, showComposeForm }) =>
     <div>Loading...</div>
   );
 
-const mapStateToProps = ({ messages }) => ({
+const mapStateToProps = ({ messages, showComposeForm }) => ({
   messages: messages.all,
-  showComposeForm: false
+  showComposeForm,
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  toggleComposeForm: () => dispatch(toggleComposeForm()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
@@ -164,9 +167,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //     label: `${e.target.value}`
 //   };
 //   this.updateMessage(request);
-// };
-
-// toggleComposeForm = () => {
-//   const toggle = !this.state.showComposeForm;
-//   this.setState({ showComposeForm: toggle });
 // };
