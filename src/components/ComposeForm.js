@@ -6,7 +6,6 @@ const ComposeForm = ({ createMessage }) => {
     const message = {};
     message.subject = e.target.subject.value;
     message.body = e.target.body.value;
-    message.labels = [];
     createMessage(message);
   };
 

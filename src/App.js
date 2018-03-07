@@ -36,7 +36,6 @@ class App extends Component {
   }
 
   async createMessage(message) {
-    const messages = this.state.messages.slice();
     const response = await fetch(`/api/messages`, {
       method: 'POST',
       body: JSON.stringify(message),
@@ -45,10 +44,10 @@ class App extends Component {
         Accept: 'application/json'
       }
     });
-    this.setState({
-      messages: [...messages, message],
-      showComposeForm: false
-    });
+    const messagesResponse = await fetch('/api/messages');
+    const messagesJson = await messagesResponse.json();
+    const messages = messagesJson._embedded.messages;
+    this.setState({ messages, showComposeForm: false });
     return response;
   }
 
