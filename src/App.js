@@ -3,9 +3,9 @@ import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
 import ComposeForm from './components/ComposeForm';
 import { connect } from 'react-redux';
-import { toggleComposeForm } from './actions'
+import { toggleComposeForm, createMessage } from './actions';
 
-const App = ({ messages, showComposeForm, toggleComposeForm }) =>
+const App = ({ messages, showComposeForm, toggleComposeForm, createMessage }) =>
   messages.length ? (
     <div className="App container">
       <Toolbar
@@ -18,7 +18,10 @@ const App = ({ messages, showComposeForm, toggleComposeForm }) =>
         toggleComposeForm={toggleComposeForm}
       />
       {showComposeForm ? (
-        <ComposeForm createMessage={this.createMessage} />
+        <ComposeForm
+          createMessage={createMessage}
+          toggleComposeForm={toggleComposeForm}
+        />
       ) : (
         <div />
       )}
@@ -30,26 +33,15 @@ const App = ({ messages, showComposeForm, toggleComposeForm }) =>
 
 const mapStateToProps = ({ messages, showComposeForm }) => ({
   messages: messages.all,
-  showComposeForm,
+  showComposeForm
 });
 
 const mapDispatchToProps = dispatch => ({
   toggleComposeForm: () => dispatch(toggleComposeForm()),
+  createMessage: message => dispatch(createMessage(message))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// state = {
-//   messages: [],
-//   showComposeForm: false
-// };
-
-// async componentDidMount() {
-//   const messagesResponse = await fetch('/api/messages');
-//   const messagesJson = await messagesResponse.json();
-//   const messages = messagesJson._embedded.messages;
-//   this.setState({ messages });
-// }
 
 // async toggle(request, toggledMessage) {
 //   const messages = this.state.messages.slice();
@@ -61,22 +53,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //   }
 //   messages[index] = toggledMessage;
 //   this.setState({ messages });
-// }
-
-// async createMessage(message) {
-//   const response = await fetch(`/api/messages`, {
-//     method: 'POST',
-//     body: JSON.stringify(message),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json'
-//     }
-//   });
-//   const messagesResponse = await fetch('/api/messages');
-//   const messagesJson = await messagesResponse.json();
-//   const messages = messagesJson._embedded.messages;
-//   this.setState({ messages, showComposeForm: false });
-//   return response;
 // }
 
 // async updateMessage(request) {

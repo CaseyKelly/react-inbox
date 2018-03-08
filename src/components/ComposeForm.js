@@ -1,12 +1,13 @@
 import React from 'react';
 
-const ComposeForm = ({ createMessage }) => {
-  const handleSubmit = e => {
+const ComposeForm = ({ createMessage, toggleComposeForm }) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const message = {};
     message.subject = e.target.subject.value;
     message.body = e.target.body.value;
-    createMessage(message);
+    await createMessage(message);
+    toggleComposeForm();
   };
 
   return (
