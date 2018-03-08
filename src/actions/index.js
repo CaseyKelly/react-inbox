@@ -1,6 +1,7 @@
 export const MESSAGES_RECEIVED = 'MESSAGES_RECEIVED';
 export const COMPOSE_FORM_TOGGLED = 'COMPOSE_FORM_TOGGLED';
 export const MESSAGE_CREATED = 'MESSAGE_CREATED';
+export const SELECT_ALL_TOGGLED = 'SELECT_ALL_TOGGLED';
 
 export function fetchMessages() {
   return async dispatch => {
@@ -29,6 +30,22 @@ export function createMessage(message) {
       message: json
     });
   };
+}
+
+export function toggleSelectAll(prevMessages) {
+  const messages = prevMessages.slice();
+  const selectedMessages = messages.filter(
+    message => message.selected === true
+  );
+  let selected;
+  selectedMessages.length === prevMessages.length
+    ? (selected = false)
+    : (selected = true);
+  messages.map(message => {
+    message.selected = selected;
+    return message;
+  });
+  return { type: SELECT_ALL_TOGGLED, messages };
 }
 
 export function toggleComposeForm() {

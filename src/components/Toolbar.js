@@ -17,6 +17,11 @@ const Toolbar = ({
   );
   const unreadMessages = messages.filter(message => message.read === false);
 
+  const handleSelectAll = e => {
+    e.preventDefault();
+    toggleSelectAll(messages);
+  };
+
   selectAllBtnStyle = () => {
     let btnStyle;
     if (selectedMessages.length === 0) {
@@ -48,7 +53,7 @@ const Toolbar = ({
           <i className="fa fa-plus" />
         </a>
 
-        <button className="btn btn-default" onClick={toggleSelectAll}>
+        <button className="btn btn-default" onClick={handleSelectAll}>
           <i className={selectAllBtnStyle()} />
         </button>
 

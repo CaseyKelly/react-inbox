@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import {
   MESSAGES_RECEIVED,
   COMPOSE_FORM_TOGGLED,
-  MESSAGE_CREATED
+  MESSAGE_CREATED,
+  SELECT_ALL_TOGGLED
 } from '../actions';
 
 function messages(state = { all: [] }, action) {
@@ -16,6 +17,11 @@ function messages(state = { all: [] }, action) {
       return {
         ...state,
         all: [...state.all, action.message]
+      };
+    case SELECT_ALL_TOGGLED:
+      return {
+        ...state,
+        all: action.messages
       };
     default:
       return state;

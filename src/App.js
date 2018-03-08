@@ -3,14 +3,20 @@ import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
 import ComposeForm from './components/ComposeForm';
 import { connect } from 'react-redux';
-import { toggleComposeForm, createMessage } from './actions';
+import { toggleComposeForm, createMessage, toggleSelectAll } from './actions';
 
-const App = ({ messages, showComposeForm, toggleComposeForm, createMessage }) =>
+const App = ({
+  messages,
+  showComposeForm,
+  toggleComposeForm,
+  createMessage,
+  toggleSelectAll
+}) =>
   messages.length ? (
     <div className="App container">
       <Toolbar
         messages={messages}
-        toggleSelectAll={this.toggleSelectAll}
+        toggleSelectAll={toggleSelectAll}
         markAs={this.markAs}
         trashMessage={this.trashMessage}
         applyLabel={this.applyLabel}
@@ -38,7 +44,8 @@ const mapStateToProps = ({ messages, showComposeForm }) => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleComposeForm: () => dispatch(toggleComposeForm()),
-  createMessage: message => dispatch(createMessage(message))
+  createMessage: message => dispatch(createMessage(message)),
+  toggleSelectAll: messages => dispatch(toggleSelectAll(messages))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
@@ -69,20 +76,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 // getSelectedMessages = () => {
 //   return this.state.messages.filter(message => message.selected === true);
-// };
-
-// toggleSelectAll = () => {
-//   const messages = this.state.messages.slice();
-//   const selectedMessages = this.getSelectedMessages();
-//   let selected;
-//   selectedMessages.length === this.state.messages.length
-//     ? (selected = false)
-//     : (selected = true);
-//   messages.map(message => {
-//     message.selected = selected;
-//     return message;
-//   });
-//   this.setState({ messages });
 // };
 
 // markAs = e => {
