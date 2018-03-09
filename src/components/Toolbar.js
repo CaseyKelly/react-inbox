@@ -4,7 +4,8 @@ const Toolbar = ({
   toggleSelectAll,
   selectAllBtnStyle,
   disabled,
-  markAs,
+  markAsRead,
+  markAsUnread,
   unreadMessageCount,
   trashMessage,
   applyLabel,
@@ -20,6 +21,13 @@ const Toolbar = ({
   const handleSelectAll = e => {
     e.preventDefault();
     toggleSelectAll(messages);
+  };
+
+  const handleMarkAs = e => {
+    e.preventDefault();
+    e.target.id === 'read'
+      ? markAsRead(selectedMessages)
+      : markAsUnread(selectedMessages);
   };
 
   selectAllBtnStyle = () => {
@@ -61,7 +69,7 @@ const Toolbar = ({
           id="read"
           className="btn btn-default"
           disabled={disabled()}
-          onClick={markAs}
+          onClick={handleMarkAs}
         >
           Mark As Read
         </button>
@@ -70,7 +78,7 @@ const Toolbar = ({
           id="unread"
           className="btn btn-default"
           disabled={disabled()}
-          onClick={markAs}
+          onClick={handleMarkAs}
         >
           Mark As Unread
         </button>

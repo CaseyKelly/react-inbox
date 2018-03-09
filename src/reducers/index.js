@@ -3,7 +3,9 @@ import {
   MESSAGES_RECEIVED,
   COMPOSE_FORM_TOGGLED,
   MESSAGE_CREATED,
-  SELECT_ALL_TOGGLED
+  SELECT_ALL_TOGGLED,
+  MARKED_AS_READ,
+  MARKED_AS_UNREAD
 } from '../actions';
 
 function messages(state = { all: [] }, action) {
@@ -22,6 +24,16 @@ function messages(state = { all: [] }, action) {
       return {
         ...state,
         all: action.messages
+      };
+    case MARKED_AS_READ:
+      return {
+        ...state,
+        all: action.selectedMessages
+      };
+    case MARKED_AS_UNREAD:
+      return {
+        ...state,
+        all: action.selectedMessages
       };
     default:
       return state;

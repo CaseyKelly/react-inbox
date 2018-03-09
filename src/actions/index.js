@@ -2,6 +2,8 @@ export const MESSAGES_RECEIVED = 'MESSAGES_RECEIVED';
 export const COMPOSE_FORM_TOGGLED = 'COMPOSE_FORM_TOGGLED';
 export const MESSAGE_CREATED = 'MESSAGE_CREATED';
 export const SELECT_ALL_TOGGLED = 'SELECT_ALL_TOGGLED';
+export const MARKED_AS_READ = 'MARKED_AS_READ';
+export const MARKED_AS_UNREAD = 'MARKED_AS_UNREAD';
 
 export function fetchMessages() {
   return async dispatch => {
@@ -46,6 +48,48 @@ export function toggleSelectAll(prevMessages) {
     return message;
   });
   return { type: SELECT_ALL_TOGGLED, messages };
+}
+
+export function markAsRead(prevSelectedMessages) {
+  const selectedMessages = prevSelectedMessages.slice();
+  selectedMessages.map(message => (message.read = true));
+  const request = {
+    messageIds: selectedMessages.map(message => message.id),
+    command: 'read',
+    read: true
+  };
+  return async dispatch => {
+    await fetch(`/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    return dispatch({ type: MARKED_AS_READ, selectedMessages });
+  };
+}
+
+export function markAsUnread(prevSelectedMessages) {
+  const selectedMessages = prevSelectedMessages.slice();
+  selectedMessages.map(message => (message.read = false));
+  const request = {
+    messageIds: selectedMessages.map(message => message.id),
+    command: 'read',
+    read: false
+  };
+  return async dispatch => {
+    await fetch(`/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    return dispatch({ type: MARKED_AS_UNREAD, selectedMessages });
+  };
 }
 
 export function toggleComposeForm() {

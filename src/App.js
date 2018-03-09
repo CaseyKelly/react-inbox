@@ -3,21 +3,30 @@ import MessageList from './components/MessageList';
 import Toolbar from './components/Toolbar';
 import ComposeForm from './components/ComposeForm';
 import { connect } from 'react-redux';
-import { toggleComposeForm, createMessage, toggleSelectAll } from './actions';
+import {
+  toggleComposeForm,
+  createMessage,
+  toggleSelectAll,
+  markAsRead,
+  markAsUnread
+} from './actions';
 
 const App = ({
   messages,
   showComposeForm,
   toggleComposeForm,
   createMessage,
-  toggleSelectAll
+  toggleSelectAll,
+  markAsRead,
+  markAsUnread
 }) =>
   messages.length ? (
     <div className="App container">
       <Toolbar
         messages={messages}
         toggleSelectAll={toggleSelectAll}
-        markAs={this.markAs}
+        markAsRead={markAsRead}
+        markAsUnread={markAsUnread}
         trashMessage={this.trashMessage}
         applyLabel={this.applyLabel}
         removeLabel={this.removeLabel}
@@ -45,7 +54,9 @@ const mapStateToProps = ({ messages, showComposeForm }) => ({
 const mapDispatchToProps = dispatch => ({
   toggleComposeForm: () => dispatch(toggleComposeForm()),
   createMessage: message => dispatch(createMessage(message)),
-  toggleSelectAll: messages => dispatch(toggleSelectAll(messages))
+  toggleSelectAll: messages => dispatch(toggleSelectAll(messages)),
+  markAsRead: messages => dispatch(markAsRead(messages)),
+  markAsUnread: messages => dispatch(markAsUnread(messages))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
@@ -61,35 +72,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //   messages[index] = toggledMessage;
 //   this.setState({ messages });
 // }
-
-// async updateMessage(request) {
-//   const response = await fetch(`/api/messages`, {
-//     method: 'PATCH',
-//     body: JSON.stringify(request),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json'
-//     }
-//   });
-//   return response;
-// }
-
-// getSelectedMessages = () => {
-//   return this.state.messages.filter(message => message.selected === true);
-// };
-
-// markAs = e => {
-//   const readOrUnread = e.target.id === 'read' ? true : false;
-//   const selectedMessages = this.getSelectedMessages();
-//   const request = {
-//     messageIds: selectedMessages.map(message => message.id),
-//     command: 'read',
-//     read: readOrUnread
-//   };
-//   selectedMessages.map(message => (message.read = readOrUnread));
-//   this.updateMessage(request);
-//   this.setState({ ...this.state.messages, selectedMessages });
-// };
 
 // trashMessage() {
 //   const selectedMessages = this.getSelectedMessages();
