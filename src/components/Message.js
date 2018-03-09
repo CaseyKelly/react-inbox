@@ -1,6 +1,17 @@
 import React from 'react';
 
-const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
+const Message = ({
+  starred,
+  selected,
+  read,
+  labels,
+  subject,
+  toggle,
+  id,
+  toggleSelectMessage,
+  toggleMessageStar,
+  messages
+}) => {
   const readStyle = read ? ' read' : ' unread';
   const selectedStyle = selected ? ' selected' : '';
   const checkboxStyle = selected ? ' checked' : '';
@@ -9,7 +20,7 @@ const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
   const handleStarred = e => {
     const request = {
       messageIds: [id],
-      command: "star",
+      command: 'star',
       star: !starred
     };
     const message = {
@@ -20,7 +31,7 @@ const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
       labels: labels,
       selected: selected
     };
-    toggle(request, message);
+    toggleMessageStar(messages, message, request);
   };
 
   const handleChecked = e => {
@@ -32,7 +43,7 @@ const Message = ({ starred, selected, read, labels, subject, toggle, id }) => {
       labels: labels,
       selected: !selected
     };
-    toggle(false, message);
+    toggleSelectMessage(messages, message);
   };
 
   return (

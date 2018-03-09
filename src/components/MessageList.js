@@ -1,7 +1,7 @@
 import React from 'react';
 import Message from './Message';
 
-const MessageList = ({ messages, toggle }) => {
+const MessageList = ({ messages, toggleSelectMessage, toggleMessageStar }) => {
   const guid = () => {
     return Math.random()
       .toString(36)
@@ -19,7 +19,9 @@ const MessageList = ({ messages, toggle }) => {
           selected={selected}
           labels={labels}
           starred={starred}
-          toggle={toggle}
+          toggleSelectMessage={toggleSelectMessage}
+          toggleMessageStar={toggleMessageStar}
+          messages={messages}
         />
       ))}
     </div>

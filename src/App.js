@@ -10,7 +10,9 @@ import {
   markAsRead,
   markAsUnread,
   addLabel,
-  removeLabel
+  removeLabel,
+  toggleSelectMessage,
+  toggleMessageStar
 } from './actions';
 
 const App = ({
@@ -22,7 +24,9 @@ const App = ({
   markAsRead,
   markAsUnread,
   addLabel,
-  removeLabel
+  removeLabel,
+  toggleSelectMessage,
+  toggleMessageStar
 }) =>
   messages.length ? (
     <div className="App container">
@@ -44,7 +48,11 @@ const App = ({
       ) : (
         <div />
       )}
-      <MessageList messages={messages} toggle={this.toggle} />
+      <MessageList
+        messages={messages}
+        toggleSelectMessage={toggleSelectMessage}
+        toggleMessageStar={toggleMessageStar}
+      />
     </div>
   ) : (
     <div>Loading...</div>
@@ -58,26 +66,22 @@ const mapStateToProps = ({ messages, showComposeForm }) => ({
 const mapDispatchToProps = dispatch => ({
   toggleComposeForm: () => dispatch(toggleComposeForm()),
   createMessage: message => dispatch(createMessage(message)),
-  toggleSelectAll: messages => dispatch(toggleSelectAll(messages)),
-  markAsRead: messages => dispatch(markAsRead(messages)),
-  markAsUnread: messages => dispatch(markAsUnread(messages)),
-  addLabel: (messages, label) => dispatch(addLabel(messages, label)),
-  removeLabel: (messages, label) => dispatch(removeLabel(messages, label))
+  toggleSelectAll: prevMessages => dispatch(toggleSelectAll(prevMessages)),
+  markAsRead: prevSelectedMessages =>
+    dispatch(markAsRead(prevSelectedMessages)),
+  markAsUnread: prevSelectedMessages =>
+    dispatch(markAsUnread(prevSelectedMessages)),
+  addLabel: (prevSelectedMessages, label) =>
+    dispatch(addLabel(prevSelectedMessages, label)),
+  removeLabel: (prevSelectedMessages, label) =>
+    dispatch(removeLabel(prevSelectedMessages, label)),
+  toggleSelectMessage: (prevMessages, toggledMessage) =>
+    dispatch(toggleSelectMessage(prevMessages, toggledMessage)),
+  toggleMessageStar: (prevMessages, toggledMessage, request) =>
+    dispatch(toggleMessageStar(prevMessages, toggledMessage, request))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// async toggle(request, toggledMessage) {
-//   const messages = this.state.messages.slice();
-//   const index = messages.findIndex(
-//     message => message.id === toggledMessage.id
-//   );
-//   if (request !== false) {
-//     this.updateMessage(request);
-//   }
-//   messages[index] = toggledMessage;
-//   this.setState({ messages });
-// }
 
 // trashMessage() {
 //   const selectedMessages = this.getSelectedMessages();

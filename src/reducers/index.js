@@ -7,7 +7,9 @@ import {
   MARKED_AS_READ,
   MARKED_AS_UNREAD,
   LABEL_ADDED,
-  LABEL_REMOVED
+  LABEL_REMOVED,
+  SELECT_MESSAGE_TOGGLED,
+  MESSAGE_STAR_TOGGLED
 } from '../actions';
 
 function messages(state = { all: [] }, action) {
@@ -46,6 +48,14 @@ function messages(state = { all: [] }, action) {
       return {
         ...state,
         all: action.selectedMessages
+      };
+    case SELECT_MESSAGE_TOGGLED:
+      return {
+        all: action.messages
+      };
+    case MESSAGE_STAR_TOGGLED:
+      return {
+        all: action.messages
       };
     default:
       return state;
