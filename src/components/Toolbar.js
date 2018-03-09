@@ -8,7 +8,7 @@ const Toolbar = ({
   markAsUnread,
   unreadMessageCount,
   trashMessage,
-  applyLabel,
+  addLabel,
   removeLabel,
   toggleComposeForm,
   messages
@@ -28,6 +28,18 @@ const Toolbar = ({
     e.target.id === 'read'
       ? markAsRead(selectedMessages)
       : markAsUnread(selectedMessages);
+  };
+
+  const handleAddLabel = e => {
+    e.preventDefault();
+    addLabel(selectedMessages, e.target.value);
+    e.target.value = 'Apply label';
+  };
+
+  const handleRemoveLabel = e => {
+    e.preventDefault();
+    removeLabel(selectedMessages, e.target.value);
+    e.target.value = 'Remove label';
   };
 
   selectAllBtnStyle = () => {
@@ -86,7 +98,7 @@ const Toolbar = ({
         <select
           className="form-control label-select"
           disabled={disabled()}
-          onChange={applyLabel}
+          onChange={handleAddLabel}
         >
           <option>Apply label</option>
           <option value="dev">dev</option>
@@ -97,7 +109,7 @@ const Toolbar = ({
         <select
           className="form-control label-select"
           disabled={disabled()}
-          onChange={removeLabel}
+          onChange={handleRemoveLabel}
         >
           <option>Remove label</option>
           <option value="dev">dev</option>

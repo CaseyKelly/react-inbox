@@ -4,6 +4,8 @@ export const MESSAGE_CREATED = 'MESSAGE_CREATED';
 export const SELECT_ALL_TOGGLED = 'SELECT_ALL_TOGGLED';
 export const MARKED_AS_READ = 'MARKED_AS_READ';
 export const MARKED_AS_UNREAD = 'MARKED_AS_UNREAD';
+export const LABEL_ADDED = 'LABEL_ADDED';
+export const LABEL_REMOVED = 'LABEL_REMOVED';
 
 export function fetchMessages() {
   return async dispatch => {
@@ -89,6 +91,57 @@ export function markAsUnread(prevSelectedMessages) {
       }
     });
     return dispatch({ type: MARKED_AS_UNREAD, selectedMessages });
+  };
+}
+
+export function addLabel(prevSelectedMessages, label) {
+  const selectedMessages = prevSelectedMessages.slice();
+  selectedMessages.map(message => {
+    return message.labels.includes(`${label}`)
+      ? message.labels
+      : message.labels.push(`${label}`);
+  });
+  const request = {
+    messageIds: selectedMessages.map(message => message.id),
+    command: 'addLabel',
+    label: `${label}`
+  };
+  return async dispatch => {
+    await fetch(`/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    return dispatch({ type: LABEL_ADDED, selectedMessages });
+  };
+}
+
+export function removeLabel(prevSelectedMessages, label) {
+  const selectedMessages = prevSelectedMessages.slice();
+  selectedMessages.map(message => {
+    const index = message.labels.indexOf(`${label}`);
+    return message.labels.includes(`${label}`)
+      ? message.labels.splice(index, 1)
+      : message.labels;
+  });
+  const request = {
+    messageIds: selectedMessages.map(message => message.id),
+    command: 'removeLabel',
+    label: `${label}`
+  };
+  return async dispatch => {
+    await fetch(`/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    return dispatch({ type: LABEL_REMOVED, selectedMessages });
   };
 }
 

@@ -5,7 +5,9 @@ import {
   MESSAGE_CREATED,
   SELECT_ALL_TOGGLED,
   MARKED_AS_READ,
-  MARKED_AS_UNREAD
+  MARKED_AS_UNREAD,
+  LABEL_ADDED,
+  LABEL_REMOVED
 } from '../actions';
 
 function messages(state = { all: [] }, action) {
@@ -31,6 +33,16 @@ function messages(state = { all: [] }, action) {
         all: action.selectedMessages
       };
     case MARKED_AS_UNREAD:
+      return {
+        ...state,
+        all: action.selectedMessages
+      };
+    case LABEL_ADDED:
+      return {
+        ...state,
+        all: action.selectedMessages
+      };
+    case LABEL_REMOVED:
       return {
         ...state,
         all: action.selectedMessages
