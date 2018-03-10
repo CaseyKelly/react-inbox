@@ -67,14 +67,11 @@ const mapDispatchToProps = dispatch => ({
   toggleComposeForm: () => dispatch(toggleComposeForm()),
   createMessage: message => dispatch(createMessage(message)),
   toggleSelectAll: prevMessages => dispatch(toggleSelectAll(prevMessages)),
-  markAsRead: prevMessages =>
-    dispatch(markAsRead(prevMessages)),
-  markAsUnread: prevMessages =>
-    dispatch(markAsUnread(prevMessages)),
-  addLabel: (prevSelectedMessages, label) =>
-    dispatch(addLabel(prevSelectedMessages, label)),
-  removeLabel: (prevSelectedMessages, label) =>
-    dispatch(removeLabel(prevSelectedMessages, label)),
+  markAsRead: prevMessages => dispatch(markAsRead(prevMessages)),
+  markAsUnread: prevMessages => dispatch(markAsUnread(prevMessages)),
+  addLabel: (prevMessages, label) => dispatch(addLabel(prevMessages, label)),
+  removeLabel: (prevMessages, label) =>
+    dispatch(removeLabel(prevMessages, label)),
   toggleSelectMessage: (prevMessages, toggledMessage) =>
     dispatch(toggleSelectMessage(prevMessages, toggledMessage)),
   toggleMessageStar: (prevMessages, toggledMessage, request) =>

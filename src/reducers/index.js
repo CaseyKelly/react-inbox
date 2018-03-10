@@ -42,12 +42,12 @@ function messages(state = { all: [] }, action) {
     case LABEL_ADDED:
       return {
         ...state,
-        all: action.selectedMessages
+        all: action.messages
       };
     case LABEL_REMOVED:
       return {
         ...state,
-        all: action.selectedMessages
+        all: action.messages
       };
     case SELECT_MESSAGE_TOGGLED:
       return {

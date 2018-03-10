@@ -108,12 +108,18 @@ export function markAsUnread(prevMessages) {
   };
 }
 
-export function addLabel(prevSelectedMessages, label) {
-  const selectedMessages = prevSelectedMessages.slice();
-  selectedMessages.map(message => {
-    return message.labels.includes(`${label}`)
-      ? message.labels
-      : message.labels.push(`${label}`);
+export function addLabel(prevMessages, label) {
+  const messages = prevMessages.slice();
+  const selectedMessages = messages.filter(
+    message => message.selected === true
+  );
+  messages.map(message => {
+    if (message.selected === true) {
+      return message.labels.includes(`${label}`)
+        ? message.labels
+        : message.labels.push(`${label}`);
+    }
+    return message;
   });
   const request = {
     messageIds: selectedMessages.map(message => message.id),
@@ -129,17 +135,23 @@ export function addLabel(prevSelectedMessages, label) {
         Accept: 'application/json'
       }
     });
-    return dispatch({ type: LABEL_ADDED, selectedMessages });
+    return dispatch({ type: LABEL_ADDED, messages });
   };
 }
 
-export function removeLabel(prevSelectedMessages, label) {
-  const selectedMessages = prevSelectedMessages.slice();
-  selectedMessages.map(message => {
-    const index = message.labels.indexOf(`${label}`);
-    return message.labels.includes(`${label}`)
-      ? message.labels.splice(index, 1)
-      : message.labels;
+export function removeLabel(prevMessages, label) {
+  const messages = prevMessages.slice();
+  const selectedMessages = messages.filter(
+    message => message.selected === true
+  );
+  messages.map(message => {
+    if (message.selected === true) {
+      const index = message.labels.indexOf(`${label}`);
+      return message.labels.includes(`${label}`)
+        ? message.labels.splice(index, 1)
+        : message.labels;
+    }
+    return message;
   });
   const request = {
     messageIds: selectedMessages.map(message => message.id),
@@ -155,7 +167,7 @@ export function removeLabel(prevSelectedMessages, label) {
         Accept: 'application/json'
       }
     });
-    return dispatch({ type: LABEL_REMOVED, selectedMessages });
+    return dispatch({ type: LABEL_REMOVED, messages });
   };
 }
 

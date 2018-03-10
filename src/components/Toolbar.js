@@ -32,13 +32,13 @@ const Toolbar = ({
 
   const handleAddLabel = e => {
     e.preventDefault();
-    addLabel(selectedMessages, e.target.value);
+    addLabel(messages, e.target.value);
     e.target.value = 'Apply label';
   };
 
   const handleRemoveLabel = e => {
     e.preventDefault();
-    removeLabel(selectedMessages, e.target.value);
+    removeLabel(messages, e.target.value);
     e.target.value = 'Remove label';
   };
 
