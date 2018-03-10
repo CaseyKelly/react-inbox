@@ -54,9 +54,15 @@ export function toggleSelectAll(prevMessages) {
   return { type: SELECT_ALL_TOGGLED, messages };
 }
 
-export function markAsRead(prevSelectedMessages) {
-  const selectedMessages = prevSelectedMessages.slice();
-  selectedMessages.map(message => (message.read = true));
+export function markAsRead(prevMessages) {
+  const messages = prevMessages.slice();
+  const selectedMessages = messages.filter(
+    message => message.selected === true
+  );
+  messages.map(message => {
+    if (message.selected === true) message.read = true;
+    return message;
+  });
   const request = {
     messageIds: selectedMessages.map(message => message.id),
     command: 'read',
@@ -71,13 +77,19 @@ export function markAsRead(prevSelectedMessages) {
         Accept: 'application/json'
       }
     });
-    return dispatch({ type: MARKED_AS_READ, selectedMessages });
+    return dispatch({ type: MARKED_AS_READ, messages });
   };
 }
 
-export function markAsUnread(prevSelectedMessages) {
-  const selectedMessages = prevSelectedMessages.slice();
-  selectedMessages.map(message => (message.read = false));
+export function markAsUnread(prevMessages) {
+  const messages = prevMessages.slice();
+  const selectedMessages = messages.filter(
+    message => message.selected === true
+  );
+  messages.map(message => {
+    if (message.selected === true) message.read = false;
+    return message;
+  });
   const request = {
     messageIds: selectedMessages.map(message => message.id),
     command: 'read',
@@ -92,7 +104,7 @@ export function markAsUnread(prevSelectedMessages) {
         Accept: 'application/json'
       }
     });
-    return dispatch({ type: MARKED_AS_UNREAD, selectedMessages });
+    return dispatch({ type: MARKED_AS_UNREAD, messages });
   };
 }
 

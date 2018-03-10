@@ -32,12 +32,12 @@ function messages(state = { all: [] }, action) {
     case MARKED_AS_READ:
       return {
         ...state,
-        all: action.selectedMessages
+        all: action.messages
       };
     case MARKED_AS_UNREAD:
       return {
         ...state,
-        all: action.selectedMessages
+        all: action.messages
       };
     case LABEL_ADDED:
       return {

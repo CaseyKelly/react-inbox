@@ -26,8 +26,8 @@ const Toolbar = ({
   const handleMarkAs = e => {
     e.preventDefault();
     e.target.id === 'read'
-      ? markAsRead(selectedMessages)
-      : markAsUnread(selectedMessages);
+      ? markAsRead(messages)
+      : markAsUnread(messages);
   };
 
   const handleAddLabel = e => {
