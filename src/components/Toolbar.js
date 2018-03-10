@@ -25,9 +25,7 @@ const Toolbar = ({
 
   const handleMarkAs = e => {
     e.preventDefault();
-    e.target.id === 'read'
-      ? markAsRead(messages)
-      : markAsUnread(messages);
+    e.target.id === 'read' ? markAsRead(messages) : markAsUnread(messages);
   };
 
   const handleAddLabel = e => {
@@ -40,6 +38,11 @@ const Toolbar = ({
     e.preventDefault();
     removeLabel(messages, e.target.value);
     e.target.value = 'Remove label';
+  };
+
+  const handleTrashMessage = e => {
+    e.preventDefault();
+    trashMessage(messages);
   };
 
   selectAllBtnStyle = () => {
@@ -120,7 +123,7 @@ const Toolbar = ({
         <button
           className="btn btn-default"
           disabled={disabled()}
-          onClick={trashMessage}
+          onClick={handleTrashMessage}
         >
           <i className="fa fa-trash-o" />
         </button>

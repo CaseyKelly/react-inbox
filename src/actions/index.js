@@ -8,6 +8,7 @@ export const LABEL_ADDED = 'LABEL_ADDED';
 export const LABEL_REMOVED = 'LABEL_REMOVED';
 export const SELECT_MESSAGE_TOGGLED = 'SELECT_MESSAGE_TOGGLED';
 export const MESSAGE_STAR_TOGGLED = 'MESSAGE_STAR_TOGGLED';
+export const MESSAGE_DELETED = 'MESSAGE_DELETED';
 
 export function fetchMessages() {
   return async dispatch => {
@@ -192,6 +193,31 @@ export function toggleMessageStar(prevMessages, toggledMessage, request) {
       }
     });
     return dispatch({ type: MESSAGE_STAR_TOGGLED, messages });
+  };
+}
+
+export function trashMessage(prevMessages) {
+  const messages = prevMessages.slice();
+  const selectedMessages = messages.filter(
+    message => message.selected === true
+  );
+  const remainingMessages = messages.filter(
+    message => message.selected !== true
+  );
+  const request = {
+    messageIds: selectedMessages.map(message => message.id),
+    command: 'delete'
+  };
+  return async dispatch => {
+    await fetch(`/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    });
+    return dispatch({ type: MESSAGE_DELETED, remainingMessages });
   };
 }
 

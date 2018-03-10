@@ -12,7 +12,8 @@ import {
   addLabel,
   removeLabel,
   toggleSelectMessage,
-  toggleMessageStar
+  toggleMessageStar,
+  trashMessage
 } from './actions';
 
 const App = ({
@@ -26,7 +27,8 @@ const App = ({
   addLabel,
   removeLabel,
   toggleSelectMessage,
-  toggleMessageStar
+  toggleMessageStar,
+  trashMessage
 }) =>
   messages.length ? (
     <div className="App container">
@@ -35,7 +37,7 @@ const App = ({
         toggleSelectAll={toggleSelectAll}
         markAsRead={markAsRead}
         markAsUnread={markAsUnread}
-        trashMessage={this.trashMessage}
+        trashMessage={trashMessage}
         addLabel={addLabel}
         removeLabel={removeLabel}
         toggleComposeForm={toggleComposeForm}
@@ -75,20 +77,8 @@ const mapDispatchToProps = dispatch => ({
   toggleSelectMessage: (prevMessages, toggledMessage) =>
     dispatch(toggleSelectMessage(prevMessages, toggledMessage)),
   toggleMessageStar: (prevMessages, toggledMessage, request) =>
-    dispatch(toggleMessageStar(prevMessages, toggledMessage, request))
+    dispatch(toggleMessageStar(prevMessages, toggledMessage, request)),
+  trashMessage: prevMessages => dispatch(trashMessage(prevMessages))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// trashMessage() {
-//   const selectedMessages = this.getSelectedMessages();
-//   const remainingMessages = this.state.messages.filter(
-//     message => message.selected !== true
-//   );
-//   const request = {
-//     messageIds: selectedMessages.map(message => message.id),
-//     command: 'delete'
-//   };
-//   this.updateMessage(request);
-//   this.setState({ messages: remainingMessages });
-// }

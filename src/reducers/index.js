@@ -9,7 +9,8 @@ import {
   LABEL_ADDED,
   LABEL_REMOVED,
   SELECT_MESSAGE_TOGGLED,
-  MESSAGE_STAR_TOGGLED
+  MESSAGE_STAR_TOGGLED,
+  MESSAGE_DELETED
 } from '../actions';
 
 function messages(state = { all: [] }, action) {
@@ -56,6 +57,10 @@ function messages(state = { all: [] }, action) {
     case MESSAGE_STAR_TOGGLED:
       return {
         all: action.messages
+      };
+    case MESSAGE_DELETED:
+      return {
+        all: action.remainingMessages
       };
     default:
       return state;
